@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atp.atp;
+package com.atp.pratica;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -20,7 +20,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  *
  * @author martins.eliel
  */
-public class Informacao4 {
+public class Informacao8 {
   
     public static class Mapperinformacao4 extends Mapper<Object, Text, Text, IntWritable>{
        
@@ -76,7 +76,7 @@ public class Informacao4 {
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
-        String arquivoEntrada = "I:\\Meu Drive\\Estudos\\PUCPR\\Cursando\\Fundamentos de Big Data (11100010551_20231_01)\\Projetos\\ATP\\archive\\exercise_dataset.csv";
+        String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
         String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";
         
        

@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atp.atp;
+//País com a maior quantidade de transações comerciais efetuadas.
+package com.atp.pratica;
 
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -20,6 +22,7 @@ public class Informacao1 {
   // Declaração dos parâmetros da entrada (chave e formato) e formato da chave que irá gerar e do valor
     public static class Mapperinformacao1 extends Mapper<Object, Text, Text, IntWritable>{
         // Implementação da classe, cria função, o contexto que auxilia na transformação da chave-valor
+        @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); // Converte os valores para String (pois estão em tipo Text)
             String[] campos = linha.split(";"); // Reconhece o delimitador do arquivo CSV
@@ -60,7 +63,7 @@ public class Informacao1 {
                paisMaiorTransacoes.set(chave);
             }
             
-            //System.out.println(chave + " - " + soma);
+            System.out.println(chave + " - " + soma);
             //passa todos os valores para o arquivo de saida
             //IntWritable valorSaida = new IntWritable(soma); // Converte para o tipo IntWritable (Hadoop)
             //context.write(chave, valorSaida); // Escreve chave e valor
@@ -68,9 +71,12 @@ public class Informacao1 {
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
+            String legenda = "Pais com maior numero de transacoes (pais - transacoes)\n";
+            context.write(new Text(legenda), null);
             context.write(paisMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            System.out.println("País com maior número de transações: " + paisMaiorTransacoes.toString());
-            System.out.println("Quantidade de transações: " + maiorTransacoes);
+            //imprimir resultado final
+            JOptionPane.showMessageDialog(null,"País com maior número de transações: " + paisMaiorTransacoes.toString() + 
+                    "\n" + "Quantidade de transações: " + maiorTransacoes);
         }
     }    
     
@@ -106,4 +112,4 @@ public class Informacao1 {
             System.exit(1); // Caso ocorra algum erro na execução do job
         }
     }
-} 
+}

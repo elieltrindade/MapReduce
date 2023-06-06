@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atp.atp;
+/*Mercadoria com maior quantidade de transações financeiras em 2016, no Brasil 
+(como a base de dados está em inglês, utilize Brazil).*/
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package com.atp.pratica;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -30,6 +27,7 @@ public class Informacao6 {
   
     public static class Mapperinformacao6 extends Mapper<Object, Text, Text, IntWritable>{
        
+        @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); 
             String[] campos = linha. split(";"); 
@@ -50,7 +48,7 @@ public class Informacao6 {
         
         Text mercadoriaMaiorTransacoes2016Brazil;
         int maiorTransacoes;
-        
+               
         @Override
         public void setup(Context context) {
             mercadoriaMaiorTransacoes2016Brazil = new Text();
@@ -64,21 +62,26 @@ public class Informacao6 {
             for(IntWritable val : valores){
                 soma += val.get(); 
             }
-            if (soma > maiorTransacoes) {
-               maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes2016Brazil.set(chave);
-            }
-            System.out.println(chave+ " - "+ soma );
-            //IntWritable valorSaida = new IntWritable(soma); 
-           // context.write(chave, valorSaida); 
+             if (soma >= maiorTransacoes) {
+                if (soma > maiorTransacoes) {
+                    maiorTransacoes = soma;
+                    mercadoriaMaiorTransacoes2016Brazil.set(chave);
+                } else { // Se o valor for igual ao maior, também adiciona ao arquivo                    
+                    mercadoriaMaiorTransacoes2016Brazil.set(mercadoriaMaiorTransacoes2016Brazil.toString() + 
+                            "\n"+ chave);                   
+                }
+            }                                                           
         }
-                @Override
+        
+        @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            context.write(mercadoriaMaiorTransacoes2016Brazil, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            System.out.println("Mercadoria com maior número de transações em 2016 no Brasil: " + mercadoriaMaiorTransacoes2016Brazil.toString());
-            System.out.println("Quantidade de transações: " + maiorTransacoes);
+            String legendaMercadoria = "Mercadoria com maior numero de transacoes no ano de 2016 no Brasil: \n" ;
+            String legendaTransacoes = "\nQuantidade de Transacoes: \n";
+               context.write(new Text(legendaMercadoria), null);
+               context.write(mercadoriaMaiorTransacoes2016Brazil, null);
+               context.write(new Text(legendaTransacoes), new IntWritable(maiorTransacoes));       
+            }                                  
         }
-    }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
@@ -96,7 +99,7 @@ public class Informacao6 {
         
         job.setJarByClass(Informacao6.class); 
         job.setMapperClass(Mapperinformacao6.class); 
-        job.setReducerClass(Reducerinformacao6.class);        
+        job.setReducerClass(Reducerinformacao6.class); 
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(IntWritable.class); 
         

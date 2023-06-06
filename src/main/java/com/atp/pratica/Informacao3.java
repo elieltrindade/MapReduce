@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atp.atp;
+//Quantidade de transações comerciais realizadas por ano.
+package com.atp.pratica;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -28,30 +28,27 @@ public class Informacao3 {
         @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); 
-            String[] campos = linha. split(","); 
-            if(campos.length == 12 ){ 
-                String ano = campos[6]; 
+            String[] campos = linha. split(";"); 
+            if(campos.length == 10 ){ 
+                String ano = campos[1]; 
                 int transacoes = 1; 
                 
                 Text chaveMap = new Text(ano); 
                 IntWritable valorMap = new IntWritable(transacoes);
-
-                //context.write(chaveMap, valorMap); 
+                context.write(chaveMap, valorMap); 
                 
             }    
         }   
     }
     
     public static class Reducerinformacao3 extends Reducer<Text, IntWritable, Text,IntWritable>{
-
-        //Text anoMaiorTransacoes;
-        //int maiorTransacoes;
         
-        //@Override
-        //public void setup(Context context) {
-          //  anoMaiorTransacoes = new Text();
-            //maiorTransacoes = Integer.MIN_VALUE;
-        //}
+        Text ano;
+        
+        @Override
+        public void setup(Context context) {
+            ano = new Text();            
+        }
         
         @Override
         public void reduce(Text chave, Iterable<IntWritable> valores, Context context) throws IOException, InterruptedException{
@@ -60,33 +57,32 @@ public class Informacao3 {
             for(IntWritable val : valores){
                 soma += val.get();
             }
-            //if (soma > maiorTransacoes) {
-              // maiorTransacoes = soma;
-               //anoMaiorTransacoes.set(chave);
-            //}
-            JOptionPane.showMessageDialog(null,chave+ " - "+ soma);
-            // System.out.println(chave+ " - "+ soma );
+
+           System.out.println(chave+ " - "+ soma );
             //IntWritable valorSaida = new IntWritable(soma); 
             //context.write(chave, valorSaida); 
+            ano.set(chave + " - " + soma + "\n"); 
         }
-        //@Override
-        //public void cleanup(Context context) throws IOException, InterruptedException {
-            //context.write(anoMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            //JOptionPane.showMessageDialog(null,anoMaiorTransacoes.toString() + anoMaiorTransacoes.toString());
-            //System.out.println("Quantidade de transações: " + maiorTransacoes);
-        //}
-    }
+        
     
+        @Override
+            public void cleanup(Reducer.Context context) throws IOException, InterruptedException {
+            String legendAno = "\nQuantidade de Transacoes: \n";
+               context.write(new Text(legendAno), null);
+               context.write(ano, null);
+//               context.write(new Text(legendaTransacoes), new IntWritable(maiorTransacoes));       
+            }                                          
+    }
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
-        String arquivoEntrada = "C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\archive\\exercise_dataset.csv";
-        String arquivoSaida = "C:\\Users\\eliel\\OneDrive\\Área de Trabalho\\archive\\informacao3";
+        String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
+        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao3";
         
     
         if(args.length == 2){
             arquivoEntrada = args[0]; 
             arquivoSaida = args[1]; 
-        }
+        }    
         
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "atividade3");

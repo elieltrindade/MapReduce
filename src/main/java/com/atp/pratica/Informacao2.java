@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.atp.atp;
+/*Mercadoria com a maior quantidade de transações comerciais no Brasil
+(como a base de dados está em inglês, utilize Brazil).*/
+package com.atp.pratica;
 
 import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
@@ -20,28 +22,27 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  *
  * @author martins.eliel
  */
-public class Informacao8 {
+public class Informacao2 {
   
-    public static class Mapperinformacao4 extends Mapper<Object, Text, Text, IntWritable>{
-       
+    public static class Mapperinformacao2 extends Mapper<Object, Text, Text, IntWritable>{
+     
+        @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); 
             String[] campos = linha. split(";"); 
-            if(campos.length == 10 ){ 
-                String mercadoria = campos[3];
+            if(campos.length ==10 && "Brazil".equals(campos[0])){ 
+                String mercadoria = campos[3]; 
                 int transacoes = 1; 
                 
                 Text chaveMap = new Text(mercadoria); 
                 IntWritable valorMap = new IntWritable(transacoes);
 
-                context.write(chaveMap, valorMap); 
-                
+                context.write(chaveMap, valorMap);                 
             }    
         }   
     }
     
-    public static class Reducerinformacao4 extends Reducer<Text, IntWritable, Text,IntWritable>{
-        
+    public static class Reducerinformacao2 extends Reducer<Text, IntWritable, Text,IntWritable>{
         Text mercadoriaMaiorTransacoes;
         int maiorTransacoes;
         
@@ -53,7 +54,7 @@ public class Informacao8 {
         
         @Override
         public void reduce(Text chave, Iterable<IntWritable> valores, Context context) throws IOException, InterruptedException{
-          
+            
             int soma = 0;
             for(IntWritable val : valores){
                 soma += val.get(); 
@@ -61,43 +62,40 @@ public class Informacao8 {
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
                mercadoriaMaiorTransacoes.set(chave);
-            }
-            System.out.println(chave+ " - "+ soma );
-            //IntWritable valorSaida = new IntWritable(soma); 
-           // context.write(chave, valorSaida); 
+            }                                    
         }
-                @Override
+        
+        @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            System.out.println("Mercadoria com maior número de transações: " + mercadoriaMaiorTransacoes.toString());
-            System.out.println("Quantidade de transações: " + maiorTransacoes);
+            String legenda = "Mercadoria com a maior quantidade de transações comerciais no Brasil (Mercadoria - Transicoes)\n";
+            context.write(new Text(legenda), null);
+            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes)); 
         }
     }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
         String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
-        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";
-        
-       
+        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao2";
+            
         if(args.length == 2){
             arquivoEntrada = args[0]; 
             arquivoSaida = args[1];  
         }
         
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "atividade4");
+        Job job = Job.getInstance(conf, "atividade2");
         
-        job.setJarByClass(Informacao4.class); 
-        job.setMapperClass(Mapperinformacao4.class); 
-        job.setReducerClass(Reducerinformacao4.class);        
+        job.setJarByClass(Informacao2.class); 
+        job.setMapperClass(Mapperinformacao2.class); 
+        job.setReducerClass(Reducerinformacao2.class);       
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(IntWritable.class); 
         
         FileInputFormat.addInputPath(job, new Path(arquivoEntrada)); 
         
         FileOutputFormat.setOutputPath(job, new Path(arquivoSaida)); 
-        
+   
         job.waitForCompletion(true);
                  
     }   
