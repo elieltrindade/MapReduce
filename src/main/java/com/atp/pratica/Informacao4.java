@@ -62,21 +62,22 @@ public class Informacao4 {
             }
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes.set(chave);
+               mercadoriaMaiorTransacoes.set(chave+" - "+soma);
             }            
         }
                 @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Mercadoria com maior quantidade de transações financeiras (Mercadoria - Transacoes)\n";
+            String legenda = "Mercadoria com maior quantidade de transações financeiras\nMercadoria - Transacoes";
             context.write(new Text(legenda), null);
-            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes));            
+            context.write(mercadoriaMaiorTransacoes, null);            
         }
     }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
         String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
-        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";        
+        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";
+        
        
         if(args.length == 2){
             arquivoEntrada = args[0]; 

@@ -57,20 +57,15 @@ public class Informacao3 {
             for(IntWritable val : valores){
                 soma += val.get();
             }
-
-           System.out.println(chave+ " - "+ soma );
-            //IntWritable valorSaida = new IntWritable(soma); 
-            //context.write(chave, valorSaida); 
-            ano.set(chave + " - " + soma + "\n"); 
+            ano.set(ano.toString() + chave + " - " + soma + "\n"); 
         }
         
     
         @Override
             public void cleanup(Reducer.Context context) throws IOException, InterruptedException {
-            String legendAno = "\nQuantidade de Transacoes: \n";
+            String legendAno = "Quantidade de Transacoes por ano: \nAno  - Transacoes";
                context.write(new Text(legendAno), null);
-               context.write(ano, null);
-//               context.write(new Text(legendaTransacoes), new IntWritable(maiorTransacoes));       
+               context.write(ano, null);     
             }                                          
     }
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{

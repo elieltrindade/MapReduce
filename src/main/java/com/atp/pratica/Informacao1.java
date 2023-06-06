@@ -7,7 +7,7 @@
 package com.atp.pratica;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
+//import javax.swing.JOptionPane;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -60,10 +60,10 @@ public class Informacao1 {
             }
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
-               paisMaiorTransacoes.set(chave);
+               paisMaiorTransacoes.set(chave+" - "+soma);
             }
             
-            System.out.println(chave + " - " + soma);
+            //System.out.println(chave + " - " + soma);
             //passa todos os valores para o arquivo de saida
             //IntWritable valorSaida = new IntWritable(soma); // Converte para o tipo IntWritable (Hadoop)
             //context.write(chave, valorSaida); // Escreve chave e valor
@@ -71,12 +71,13 @@ public class Informacao1 {
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Pais com maior numero de transacoes (pais - transacoes)\n";
+            String legenda = "Pais com maior numero de transacoes \nPais - Transacoes";
             context.write(new Text(legenda), null);
-            context.write(paisMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
+            context.write(paisMaiorTransacoes, null);
+           //context.write(paisMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
             //imprimir resultado final
-            JOptionPane.showMessageDialog(null,"País com maior número de transações: " + paisMaiorTransacoes.toString() + 
-                    "\n" + "Quantidade de transações: " + maiorTransacoes);
+            //JOptionPane.showMessageDialog(null,"País com maior número de transações: " + paisMaiorTransacoes.toString() + 
+                   // "\n" + "Quantidade de transações: " + maiorTransacoes);
         }
     }    
     

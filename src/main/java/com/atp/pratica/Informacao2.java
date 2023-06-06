@@ -37,7 +37,8 @@ public class Informacao2 {
                 Text chaveMap = new Text(mercadoria); 
                 IntWritable valorMap = new IntWritable(transacoes);
 
-                context.write(chaveMap, valorMap);                 
+                context.write(chaveMap, valorMap); 
+                
             }    
         }   
     }
@@ -61,15 +62,15 @@ public class Informacao2 {
             }
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes.set(chave);
+               mercadoriaMaiorTransacoes.set(chave+" - "+soma);
             }                                    
         }
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Mercadoria com a maior quantidade de transações comerciais no Brasil (Mercadoria - Transicoes)\n";
+            String legenda = "Mercadoria com a maior quantidade de transações comerciais no Brasil\nMercadoria - Transacoes";
             context.write(new Text(legenda), null);
-            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes)); 
+            context.write(mercadoriaMaiorTransacoes, null); 
         }
     }
     
@@ -77,7 +78,8 @@ public class Informacao2 {
         
         String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
         String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao2";
-            
+        
+    
         if(args.length == 2){
             arquivoEntrada = args[0]; 
             arquivoSaida = args[1];  
@@ -98,5 +100,5 @@ public class Informacao2 {
    
         job.waitForCompletion(true);
                  
-    }   
+    }  
 }

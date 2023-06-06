@@ -75,7 +75,7 @@ public class Informacao6 {
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legendaMercadoria = "Mercadoria com maior numero de transacoes no ano de 2016 no Brasil: \n" ;
+            String legendaMercadoria = "Mercadoria(s) com maior numero de transacoes no ano de 2016 no Brasil:" ;
             String legendaTransacoes = "\nQuantidade de Transacoes: \n";
                context.write(new Text(legendaMercadoria), null);
                context.write(mercadoriaMaiorTransacoes2016Brazil, null);
