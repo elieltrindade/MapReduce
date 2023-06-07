@@ -23,62 +23,66 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  */
 public class Informacao7 {
   
-    public static class Mapperinformacao4 extends Mapper<Object, Text, Text, IntWritable>{
+    public static class Mapperinformacao7 extends Mapper<Object, Text, Text, IntWritable>{
        
+        @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); 
             String[] campos = linha. split(";"); 
             if(campos.length == 10 ){ 
                 String mercadoria = campos[3];
-                int transacoes = 1; 
+                try{ //Tratamento caso peso for String
+                    int peso = Integer.parseInt(campos[6]); // transforma uma String em inteiro
                 
-                Text chaveMap = new Text(mercadoria); 
-                IntWritable valorMap = new IntWritable(transacoes);
+                    Text chaveMap = new Text(mercadoria); 
+                    IntWritable valorMap = new IntWritable(peso);
 
-                context.write(chaveMap, valorMap); 
-                
+                    context.write(chaveMap, valorMap);
+                }
+                catch(NumberFormatException e){                
+                 
+                }               
             }    
         }   
     }
     
-    public static class Reducerinformacao4 extends Reducer<Text, IntWritable, Text,IntWritable>{
+    public static class Reducerinformacao7 extends Reducer<Text, IntWritable, Text,IntWritable>{
         
-        Text mercadoriaMaiorTransacoes;
-        int maiorTransacoes;
+        Text mercadoriaMaiorTotalPeso;
+        int maiorPeso;
         
         @Override
         public void setup(Context context) {
-            mercadoriaMaiorTransacoes = new Text();
-            maiorTransacoes = Integer.MIN_VALUE;
+            mercadoriaMaiorTotalPeso = new Text();
+            maiorPeso = Integer.MIN_VALUE;
         }
         
         @Override
         public void reduce(Text chave, Iterable<IntWritable> valores, Context context) throws IOException, InterruptedException{
           
-            int soma = 0;
+            int peso = 0;
             for(IntWritable val : valores){
-                soma += val.get(); 
+                peso = val.get(); 
+            
+                if (peso > maiorPeso) {  //Deve ficar dentro da estrutura de repeticao para achar o maior peso dentro da mesma chave
+                   maiorPeso = peso;        //se nao ele compara apenas o primeiro valor de cada chave
+                   mercadoriaMaiorTotalPeso.set(chave+" - "+peso);
+                }
             }
-            if (soma > maiorTransacoes) {
-               maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes.set(chave);
-            }
-            System.out.println(chave+ " - "+ soma );
-            //IntWritable valorSaida = new IntWritable(soma); 
-           // context.write(chave, valorSaida); 
+            System.out.println(chave+ " - "+ peso);
         }
                 @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            System.out.println("Mercadoria com maior número de transações: " + mercadoriaMaiorTransacoes.toString());
-            System.out.println("Quantidade de transações: " + maiorTransacoes);
+            String legenda = "Mercadoria com maior peso\nMercadoria - Peso";
+            context.write(new Text(legenda),null);
+            context.write(mercadoriaMaiorTotalPeso, null);                    
         }
     }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
         String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
-        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";
+        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao7";
         
        
         if(args.length == 2){
@@ -87,11 +91,11 @@ public class Informacao7 {
         }
         
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "atividade4");
+        Job job = Job.getInstance(conf, "atividade7");
         
-        job.setJarByClass(Informacao4.class); 
-        job.setMapperClass(Mapperinformacao4.class); 
-        job.setReducerClass(Reducerinformacao4.class);        
+        job.setJarByClass(Informacao7.class); 
+        job.setMapperClass(Mapperinformacao7.class); 
+        job.setReducerClass(Reducerinformacao7.class);        
         job.setOutputKeyClass(Text.class); 
         job.setOutputValueClass(IntWritable.class); 
         

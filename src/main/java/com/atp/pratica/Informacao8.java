@@ -20,65 +20,67 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 /**
  *
  * @author martins.eliel
- */
+ *///Mercadoria com maior total de peso, de acordo com todas as transações comerciais, separadas por ano.
 public class Informacao8 {
   
-    public static class Mapperinformacao4 extends Mapper<Object, Text, Text, IntWritable>{
-       
+    public static class Mapperinformacao8 extends Mapper<Object, Text, Text, IntWritable>{        
+        
+        @Override
         public void map(Object chave, Text valor, Context context) throws IOException, InterruptedException{
             String linha = valor.toString(); 
             String[] campos = linha. split(";"); 
             if(campos.length == 10 ){ 
-                String mercadoria = campos[3];
-                int transacoes = 1; 
-                
-                Text chaveMap = new Text(mercadoria); 
-                IntWritable valorMap = new IntWritable(transacoes);
-
-                context.write(chaveMap, valorMap); 
-                
+                String ano = campos[1];
+                try{
+                    int peso = Integer.parseInt(campos[6]);                 
+                    Text chaveMap = new Text(ano); 
+                    IntWritable valorMap = new IntWritable(peso);                
+                    context.write(chaveMap, valorMap); 
+                }
+                catch(NumberFormatException e){
+                            
+                }             
             }    
         }   
     }
     
-    public static class Reducerinformacao4 extends Reducer<Text, IntWritable, Text,IntWritable>{
-        
-        Text mercadoriaMaiorTransacoes;
-        int maiorTransacoes;
+    public static class Reducerinformacao8 extends Reducer<Text, IntWritable, Text,IntWritable>{
+        Text mercadoriaMaiorTotalPeso;
         
         @Override
-        public void setup(Context context) {
-            mercadoriaMaiorTransacoes = new Text();
-            maiorTransacoes = Integer.MIN_VALUE;
-        }
+        public void setup(Context context) throws IOException, InterruptedException {
+            mercadoriaMaiorTotalPeso = new Text();
+        } 
         
-        @Override
-        public void reduce(Text chave, Iterable<IntWritable> valores, Context context) throws IOException, InterruptedException{
-          
-            int soma = 0;
-            for(IntWritable val : valores){
-                soma += val.get(); 
+        public void reduce(Text chave, Iterable<IntWritable> valores, Reducer.Context context) throws IOException, InterruptedException{
+        int maiorPeso = Integer.MIN_VALUE;
+        String mercadoria = "";
+    
+        for (IntWritable val : valores) {
+            int peso = val.get();
+
+            if (peso > maiorPeso) {
+                maiorPeso = peso;
+                mercadoria = chave.toString();
             }
-            if (soma > maiorTransacoes) {
-               maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes.set(chave);
-            }
-            System.out.println(chave+ " - "+ soma );
-            //IntWritable valorSaida = new IntWritable(soma); 
-           // context.write(chave, valorSaida); 
         }
+    
+        mercadoriaMaiorTotalPeso.set(mercadoria + ";" + maiorPeso);
+}
                 @Override
-        public void cleanup(Context context) throws IOException, InterruptedException {
-            context.write(mercadoriaMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes
-            System.out.println("Mercadoria com maior número de transações: " + mercadoriaMaiorTransacoes.toString());
-            System.out.println("Quantidade de transações: " + maiorTransacoes);
+        public void cleanup(Reducer.Context context) throws IOException, InterruptedException {
+            String legenda = """
+                             Mercadoria com maior total de peso, de acordo com todas as transa\u00e7\u00f5es comerciais, separadas por ano
+                             Ano - Mercadoria - Peso""";
+            context.write(new Text(legenda),null);
+            context.write(null , new Text(mercadoriaMaiorTotalPeso));
         }
     }
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
         String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
-        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao4";
+        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao8";
         
        
         if(args.length == 2){
@@ -87,13 +89,14 @@ public class Informacao8 {
         }
         
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "atividade4");
+        Job job = Job.getInstance(conf, "atividade8");
         
-        job.setJarByClass(Informacao4.class); 
-        job.setMapperClass(Mapperinformacao4.class); 
-        job.setReducerClass(Reducerinformacao4.class);        
+        job.setJarByClass(Informacao8.class); 
+        job.setMapperClass(Mapperinformacao8.class); 
+        job.setReducerClass(Reducerinformacao8.class);        
         job.setOutputKeyClass(Text.class); 
-        job.setOutputValueClass(IntWritable.class); 
+        job.setOutputValueClass(IntWritable.class);
+        
         
         FileInputFormat.addInputPath(job, new Path(arquivoEntrada)); 
         
