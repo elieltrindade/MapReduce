@@ -66,14 +66,14 @@ public class Informacao7 {
             
                 if (peso > maiorPeso) {  //Deve ficar dentro da estrutura de repeticao para achar o maior peso dentro da mesma chave
                    maiorPeso = peso;        //se nao ele compara apenas o primeiro valor de cada chave
-                   mercadoriaMaiorTotalPeso.set(chave+" - "+peso);
+                   mercadoriaMaiorTotalPeso.set(chave+";"+peso);
                 }
             }
-            System.out.println(chave+ " - "+ peso);
+
         }
                 @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Mercadoria com maior peso\nMercadoria - Peso";
+            String legenda = "Mercadoria com maior peso\nMercadoria;Peso";
             context.write(new Text(legenda),null);
             context.write(mercadoriaMaiorTotalPeso, null);                    
         }

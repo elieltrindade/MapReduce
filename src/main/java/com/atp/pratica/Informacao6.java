@@ -65,21 +65,20 @@ public class Informacao6 {
              if (soma >= maiorTransacoes) {
                 if (soma > maiorTransacoes) {
                     maiorTransacoes = soma;
-                    mercadoriaMaiorTransacoes2016Brazil.set(chave);
+                    mercadoriaMaiorTransacoes2016Brazil.set(chave+";"+maiorTransacoes);
                 } else { // Se o valor for igual ao maior, também adiciona ao arquivo                    
                     mercadoriaMaiorTransacoes2016Brazil.set(mercadoriaMaiorTransacoes2016Brazil.toString() + 
-                            "\n"+ chave);                   
+                            "\n"+ chave+";"+maiorTransacoes);                   
                 }
             }                                                           
         }
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legendaMercadoria = "Mercadoria(s) com maior numero de transacoes no ano de 2016 no Brasil:" ;
-            String legendaTransacoes = "\nQuantidade de Transacoes: \n";
+            String legendaMercadoria = "Mercadoria(s) com maior numero de transacoes no ano de 2016 no Brasil:"
+                    + "\nAnimal;Transacoes:";
                context.write(new Text(legendaMercadoria), null);
-               context.write(mercadoriaMaiorTransacoes2016Brazil, null);
-               context.write(new Text(legendaTransacoes), new IntWritable(maiorTransacoes));       
+               context.write(mercadoriaMaiorTransacoes2016Brazil, null);                    
             }                                  
         }
     

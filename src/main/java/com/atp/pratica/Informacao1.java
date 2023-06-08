@@ -60,7 +60,7 @@ public class Informacao1 {
             }
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
-               paisMaiorTransacoes.set(chave+" - "+soma);
+               paisMaiorTransacoes.set(chave+";"+soma);
             }
             
             //System.out.println(chave + " - " + soma);
@@ -71,7 +71,7 @@ public class Informacao1 {
         
         @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Pais com maior numero de transacoes \nPais - Transacoes";
+            String legenda = "Pais com maior numero de transacoes \nPais;Transacoes";
             context.write(new Text(legenda), null);
             context.write(paisMaiorTransacoes, null);
            //context.write(paisMaiorTransacoes, new IntWritable(maiorTransacoes)); //passa pais com maior transicoes

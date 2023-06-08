@@ -35,8 +35,7 @@ public class Informacao3 {
                 
                 Text chaveMap = new Text(ano); 
                 IntWritable valorMap = new IntWritable(transacoes);
-                context.write(chaveMap, valorMap); 
-                
+                context.write(chaveMap, valorMap);                 
             }    
         }   
     }
@@ -57,13 +56,13 @@ public class Informacao3 {
             for(IntWritable val : valores){
                 soma += val.get();
             }
-            ano.set(ano.toString() + chave + " - " + soma + "\n"); 
+            ano.set(ano.toString() + chave + ";" + soma + "\n"); 
         }
         
     
         @Override
             public void cleanup(Reducer.Context context) throws IOException, InterruptedException {
-            String legendAno = "Quantidade de Transacoes por ano: \nAno  - Transacoes";
+            String legendAno = "Quantidade de Transacoes por ano: \nAno;Transacoes";
                context.write(new Text(legendAno), null);
                context.write(ano, null);     
             }                                          

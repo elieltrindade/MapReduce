@@ -62,12 +62,12 @@ public class Informacao4 {
             }
             if (soma > maiorTransacoes) {
                maiorTransacoes = soma;
-               mercadoriaMaiorTransacoes.set(chave+" - "+soma);
+               mercadoriaMaiorTransacoes.set(chave+";"+soma);
             }            
         }
                 @Override
         public void cleanup(Context context) throws IOException, InterruptedException {
-            String legenda = "Mercadoria com maior quantidade de transações financeiras\nMercadoria - Transacoes";
+            String legenda = "Mercadoria com maior quantidade de transações financeiras\nMercadoria;Transacoes";
             context.write(new Text(legenda), null);
             context.write(mercadoriaMaiorTransacoes, null);            
         }
