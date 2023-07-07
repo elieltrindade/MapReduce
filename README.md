@@ -12,6 +12,10 @@ Para executar o código, você precisará das seguintes ferramentas:
   
 Certifique-se de ter instalado corretamente todas as dependências antes de executar o programa.
 
+### Atenção
+O ambiente Hadoop, é comumente usado em sistemas operacionais Linux ou UNIX-like. No entanto, é possível configurar um ambiente Hadoop no Windows 10 usando ferramentas como o WSL (Windows Subsystem for Linux) ou o Cygwin. Contudo, a execução do Hadoop no Windows 10 podem ser complexas e requerem conhecimento avançado do Hadoop e do ambiente Windows.
+Caso você não precise executar o código em um ambiente Hadoop completo, pode ser possível adaptá-lo para ser executado localmente no Windows 10, sem a necessidade do Hadoop. Nesse caso, você precisará fazer as modificações necessárias no código para remover as dependências do Hadoop e ajustá-lo para operar em um ambiente local.
+
 ## Arquivo pom.xml
 O arquivo pom.xml é um arquivo de configuração usado pelo Apache Maven para gerenciar o projeto Java e suas dependências. Ele contém informações sobre o projeto, como as dependências necessárias, o nome do projeto, a versão e outros detalhes.
 
