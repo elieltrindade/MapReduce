@@ -17,11 +17,11 @@ O arquivo pom.xml é um arquivo de configuração usado pelo Apache Maven para g
 
 Aqui está uma breve explicação das principais seções do arquivo pom.xml:
 
-* '<groupId>', '<artifactId>', '<version>': Essas tags identificam exclusivamente o projeto no repositório Maven.
-'<packaging>': Especifica o tipo de artefato que será construído (no caso, um arquivo JAR).
-'<properties>': Define as propriedades do projeto, como codificação de origem e versões do compilador Java.
-'<dependencies>': Lista as dependências do projeto, que são bibliotecas externas necessárias para a execução do código.
-'<name>': Nome do projeto.
+* '\<groupId\>', '<artifactId>', '<version>': Essas tags identificam exclusivamente o projeto no repositório Maven.
+* '\<packaging\>' : Especifica o tipo de artefato que será construído (no caso, um arquivo JAR).
+* '\<properties\>' : Define as propriedades do projeto, como codificação de origem e versões do compilador Java.
+* '\<dependencies\>' : Lista as dependências do projeto, que são bibliotecas externas necessárias para a execução do código.
+* '\<name\>' : Nome do projeto.
 
 Certifique-se de que as dependências mencionadas no arquivo **pom.xml** estão corretamente instaladas e acessíveis antes de executar o código.
 
