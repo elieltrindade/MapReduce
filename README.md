@@ -1,6 +1,6 @@
 # README
 
-Este repositório contém o código e o arquivo de configuração necessários para executar um programa MapReduce que processa dados de transações comerciais. A seguir, você encontrará as ferramentas necessárias para executar o código, uma explicação do arquivo **pom.xml** e uma descrição detalhada do código em si.
+Este repositório contém o código e o arquivo de configuração necessários para executar um programa MapReduce que processa dados de transações comerciais (não contém a base .CSV). A seguir, você encontrará as ferramentas necessárias para executar o código, uma explicação do arquivo **pom.xml** e uma descrição detalhada do código em si.
 
 ## Ferramentas necessárias
 
