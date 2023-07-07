@@ -15,6 +15,7 @@ Certifique-se de ter instalado corretamente todas as dependências antes de exec
 ### Atenção
 O ambiente Hadoop, é comumente usado em sistemas operacionais Linux ou UNIX-like. No entanto, é possível configurar um ambiente Hadoop no Windows 10 usando ferramentas como o WSL (Windows Subsystem for Linux) ou o Cygwin. Contudo, a execução do Hadoop no Windows 10 podem ser complexas e requerem conhecimento avançado do Hadoop e do ambiente Windows.
 Caso você não precise executar o código em um ambiente Hadoop completo, pode ser possível adaptá-lo para ser executado localmente no Windows 10, sem a necessidade do Hadoop. Nesse caso, você precisará fazer as modificações necessárias no código para remover as dependências do Hadoop e ajustá-lo para operar em um ambiente local.
+
 A classe 'versaoLocal', irá rodar o arquivo localmente sem a necessidade da instalação do Hadoop e do Mavem, consequentemente não é necessário inserir as dependências no arquivo **pom.xml**
 
 ## Arquivo pom.xml
