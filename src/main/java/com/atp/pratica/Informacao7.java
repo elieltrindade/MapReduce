@@ -81,8 +81,8 @@ public class Informacao7 {
     
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException{
         
-        String arquivoEntrada = "/home/Disciplinas/FundamentosBigData/OperacoesComerciais/base_100_mil.csv";
-        String arquivoSaida = "/home2/ead2022/SEM1/martins.eliel/Desktop/atp/informacao7";
+        String arquivoEntrada = "caminho/do/arquivo/entrada.csv";
+        String arquivoSaida = "caminho/do/arquivo/saida.csv";     
         
        
         if(args.length == 2){

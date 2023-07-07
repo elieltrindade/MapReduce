@@ -1,0 +1,100 @@
+inf1
+Canada 3798
+
+inf2
+Horses, live except pure-bred breeding 64
+
+inf3
+1988 282
+1989 724
+1990 815
+1991 1053
+1992 1541
+1993 1957
+1994 2569
+1995 3059
+1996 3224
+1997 3554
+1998 3577
+1999 3855
+2000 4289
+2001 4133
+2002 4093
+2003 4115
+2004 4195
+2005 4251
+2006 4248
+2007 4501
+2008 4259
+2009 4443
+2010 4579
+2011 4625
+2012 4789
+2013 4637
+2014 4598
+2015 4521
+2016 3513
+year 1
+
+inf4
+Animals, live, except farm animals 6940
+
+inf5
+Animals, live, except farm animals 243
+
+inf6
+Animals, live, except farm animals 2
+Bovine animals, live pure-bred breeding 2
+Bovine animals, live, except pure-bred breeding 2
+Bovine cuts bone in, fresh or chilled 2
+Bovine cuts bone in, frozen 2
+Bovine cuts boneless, fresh or chilled 2
+Bovine cuts boneless, frozen 2
+Bovine edible offal, frozen except livers and tongues 2
+Bovine livers, frozen 2
+Duck, goose, guinea fowl cuts, offal not liver, froze 2
+Fowl cuts & offal, domestic, except livers, frozen 2
+Fowls, domestic, whole, frozen 2
+Fowls, live domestic < 185 grams 2
+Horses, live except pure-bred breeding 2
+Horses, live pure-bred breeding 2
+Meat and edible meat offal cured, flours, meals nes 2
+Pig and poultry fat, unrendered 2
+Swine cuts, frozen nes 2
+Swine edible offal, frozen except livers 2
+Swine meat, salted/dried/smoked not ham/shoulder/bell 2
+Swine, live pure-bred breeding 2
+
+inf7
+Fowl cuts & offal, domestic, except livers, frozen 2142946334
+
+inf8
+1988;Bovine cuts boneless, frozen;518852535
+1989;Bovine cuts boneless, frozen;462542068
+1990 Bovine cuts boneless, frozen 568128189
+1991 Bovine cuts boneless, frozen 532217287
+1992 Bovine animals, live, except pure-bred breeding 823398000
+1993 Bovine animals, live, except pure-bred breeding 857787472
+1994 Bovine animals, live, except pure-bred breeding 775816206
+1995 Bovine animals, live, except pure-bred breeding 997326912
+1996 Bovine animals, live, except pure-bred breeding 938549959
+1997 Bovine animals, live, except pure-bred breeding 899768765
+1998 Bovine animals, live, except pure-bred breeding 909178863
+1999 Fowl cuts & offal, domestic, except livers, frozen 1083781403
+2000 Fowl cuts & offal, domestic, except livers, frozen 1005055249
+2001 Bovine animals, live, except pure-bred breeding 972801934
+2002 Bovine animals, live, except pure-bred breeding 1013517959
+2003 Fowl cuts & offal, domestic, except livers, frozen 1123874764
+2004 Fowl cuts & offal, domestic, except livers, frozen 1449925284
+2005 Fowl cuts & offal, domestic, except livers, frozen 1714370222
+2006 Fowl cuts & offal, domestic, except livers, frozen 1632784701
+2007 Fowl cuts & offal, domestic, except livers, frozen 1838259478
+2008 Fowl cuts & offal, domestic, except livers, frozen 1929024614
+2009 Fowl cuts & offal, domestic, except livers, frozen 1863133655
+2010 Fowl cuts & offal, domestic, except livers, frozen 1969883409
+2011 Fowl cuts & offal, domestic, except livers, frozen 2067338502
+2012 Fowl cuts & offal, domestic, except livers, frozen 2142946334
+2013 Fowl cuts & offal, domestic, except livers, frozen 2067872842
+2014 Fowls, domestic, whole, frozen 1429579512
+2015 Fowls, domestic, whole, frozen 1402991698
+2016 Fowls, domestic, whole, frozen 1371343289
